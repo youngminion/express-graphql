@@ -8,13 +8,58 @@ const {buildSchema} = require('graphql');
 
 const schema = buildSchema(`
     type Query {
-        description: String
+        posts: [Post],
+        comments: [Comment]
+    }
+    type Post {
+        id: ID!
+        title: String!
+        description: String!
+        comments: [Comment]
+    }
+
+    type Comment {
+        id: ID!
+        text: String!
+        likes: Post
     }
 `);
 //Schema를 만드는 함수
+//type Post 설명 : 
+// :! = important(css에서의 그 important 맞다)
+// post로 보낼 값을 정해줌
+// Comment 설명 : 
+// post로 보낸 값을 comment로 받을 때, comment로 받을 값을 입력해주는 공간.
 
 const root = {
-    description: "I am John"
+    posts : [
+        {
+            id: 'post1',
+            title: 'title1',
+            description: 'description1',
+            comments: [
+                {
+                    id: 'comment1',
+                    text: 'test1',
+                    likes: 1
+                }]
+        },
+        {
+            id: 'post2',
+            title: 'title2',
+            description: 'description2',
+            comments: [
+
+            ]
+        }
+    ],
+    comments : [
+        {
+            id: 'comment1',
+            text: 'test1',
+            likes: 1
+        }
+    ]
 };
 //Query의 결과값을 나타내는 함수 
 
